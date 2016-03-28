@@ -10,11 +10,21 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def create
-    company = Company.new(company_params)
-    if company.save
-      render json: company, status: 201, location: [:api, company]
+    @company = Company.new(company_params)
+
+    if @company.save
+      @user = User.create(
+        email: @company.email,
+        password: @company.password,
+        password_confirmation: @company.password,
+        company_id: @company.id,
+        company_name: @company.name,
+        admin_user: true
+      )
+
+      render
     else
-      render json: { errors: company.errors }, status: 422
+      render json: { errors: @company.errors }, status: 422
     end
   end
 
@@ -41,6 +51,6 @@ class Api::V1::CompaniesController < ApplicationController
   private
 
     def company_params
-      params.require(:company).permit(:name, :email, :password, :password_confirmation)
+      params.permit(:name, :email, :password, :password_confirmation)
     end
 end

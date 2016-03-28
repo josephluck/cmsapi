@@ -1,6 +1,6 @@
 class Company < ActiveRecord::Base
 	validates :name, uniqueness: true
-	after_create :create_admin_user_account, :create_site
+	after_create :create_site
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -15,17 +15,6 @@ class Company < ActiveRecord::Base
   has_many :items
   has_many :fields
   has_many :field_templates
-
-  def create_admin_user_account
-  	User.create(
-  		email: self.email,
-  		password: self.password,
-  		password_confirmation: self.password,
-  		company_id: self.id,
-  		company_name: self.name,
-  		admin_user: true
-  	)
-  end
 
   def create_site
     Site.create(
