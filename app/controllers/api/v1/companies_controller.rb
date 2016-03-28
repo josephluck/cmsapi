@@ -6,13 +6,18 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def show
-    respond_with Company.find(params[:id])
+    @company = Company.find(params[:id])
+
+    @api_consumer = @company.users.find_by(api_consumer: true)
+
+    render
   end
 
   def create
     @company = Company.new(company_params)
 
     if @company.save
+      # Create the first user
       @user = User.create(
         email: @company.email,
         password: @company.password,
@@ -20,6 +25,16 @@ class Api::V1::CompaniesController < ApplicationController
         company_id: @company.id,
         company_name: @company.name,
         admin_user: true
+      )
+
+      # Create the API consumer key
+      @api_consumer = User.create(
+        email: SecureRandom.uuid + "@local.co",
+        password: "12345678",
+        password_confirmation: "12345678",
+        company_id: @company.id,
+        company_name: @company.name,
+        api_consumer: true
       )
 
       render
