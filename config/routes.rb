@@ -26,6 +26,8 @@ CmsApi::Application.routes.draw do
       # CMS specific endpoints
       resources :sites, :only => [:index, :show, :create, :update, :destroy]
 
+      get '/companies/:id/pages', to: 'companies#pages'
+
       resources :pages, :only => [:index, :show, :create, :update, :destroy]
       get '/sites/:site_id/pages', to: 'sites#pages'
 

@@ -48,6 +48,11 @@ class Api::V1::CompaniesController < ApplicationController
     render json: { projects: projects }, status: 200
   end
 
+  def pages
+    @pages = Company.find(params[:id]).pages()
+    render
+  end
+
   private
 
     def company_params
