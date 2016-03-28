@@ -41,9 +41,7 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'rails_12factor', group: :production
 
-group :development do
-  gem 'pg'
-end
+gem 'pg'
 
 gem "devise"
 
