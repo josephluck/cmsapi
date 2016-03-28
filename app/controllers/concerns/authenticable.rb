@@ -14,8 +14,4 @@ module Authenticable
     render json: { errors: "User doesn't have permission" },
               status: :unauthorized unless current_user.admin_user?
   end
-
-  def user_signed_in?
-    current_user.present?
-  end
 end
