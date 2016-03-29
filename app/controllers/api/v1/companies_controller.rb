@@ -7,8 +7,7 @@ class Api::V1::CompaniesController < ApplicationController
 
   def show
     @company = Company.find(params[:id])
-
-    @api_consumer = @company.users.find_by(api_consumer: true)
+    @api_consumer = User.find_by api_consumer: true, company_id: @company.id
 
     render
   end
