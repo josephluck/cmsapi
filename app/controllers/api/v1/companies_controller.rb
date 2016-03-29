@@ -47,7 +47,9 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def destroy
-    # Only admin user can delete company
+    company = current_user.company
+    company.destroy
+    head 204
   end
 
   # Protect with before_action

@@ -7,14 +7,14 @@ class Company < ActiveRecord::Base
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :users
-  has_many :projects
-  has_many :sites
-  has_many :pages
-  has_many :sections
-  has_many :items
-  has_many :fields
-  has_many :field_templates
+  has_many :users, :dependent => :destroy
+  has_many :projects, :dependent => :destroy
+  has_many :sites, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
+  has_many :sections, :dependent => :destroy
+  has_many :items, :dependent => :destroy
+  has_many :fields, :dependent => :destroy
+  has_many :field_templates, :dependent => :destroy
 
   def create_site
     Site.create(
