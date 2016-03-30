@@ -10,25 +10,26 @@ class Api::V1::SitesController < ApplicationController
   end
 
   def show
-    respond_with current_user.company.sites.find(params[:id])
+    @site = current_user.company.sites.find_by(id: params[:id])
+    render
   end
 
   def create
-    site = Site.new(site_params)
+    @site = Site.new(site_params)
     site.company_id = current_user.company_id
 
-    if site.save
-      render json: site, status: 201, location: [:api, site]
+    if @site.save
+      render
     else
       render json: { errors: site.errors }, status: 422
     end
   end
 
   def update
-    site = current_user.company.sites.find(params[:id])
+    @site = current_user.company.sites.find(params[:id])
 
-    if site.update(site_params)
-      render json: site, status: 200, location: [:api, site]
+    if @site.update(site_params)
+      render
     else
       render json: { errors: site.errors }, status: 422
     end
