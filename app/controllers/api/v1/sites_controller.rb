@@ -5,7 +5,8 @@ class Api::V1::SitesController < ApplicationController
   respond_to :json
 
   def index
-    respond_with current_user.company.sites
+    @sites = current_user.company.sites
+    render
   end
 
   def show
