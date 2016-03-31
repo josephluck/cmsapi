@@ -1,6 +1,10 @@
 class Page < ActiveRecord::Base
   validates :title,
-  	presence: true
+  	presence: true,
+    uniqueness: {
+      scope: :site,
+      message: "This page name already exists"
+    }
   	# format: {
   	# 	with: /\A[a-zA-Z0-9_]*\Z/,
   	# 	message: "Please only alphanumeric with underscores"
