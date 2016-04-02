@@ -16,7 +16,7 @@ class Api::V1::SitesController < ApplicationController
 
   def create
     @site = Site.new(site_params)
-    site.company_id = current_user.company_id
+    @site.company_id = current_user.company_id
 
     if @site.save
       render
@@ -43,8 +43,8 @@ class Api::V1::SitesController < ApplicationController
 
   # Return an array of pages for this site
   def pages
-    pages = Site.find(params[:site_id]).pages()
-    render json: { pages: pages }, status: 200
+    @pages = Site.find(params[:site_id]).pages
+    render
   end
 
   private
