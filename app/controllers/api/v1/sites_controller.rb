@@ -21,7 +21,7 @@ class Api::V1::SitesController < ApplicationController
     if @site.save
       render
     else
-      render json: { errors: site.errors }, status: 422
+      render json: { errors: @site.errors }, status: 422
     end
   end
 
@@ -31,7 +31,7 @@ class Api::V1::SitesController < ApplicationController
     if @site.update(site_params)
       render
     else
-      render json: { errors: site.errors }, status: 422
+      render json: { errors: @site.errors }, status: 422
     end
   end
 
