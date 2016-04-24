@@ -22,7 +22,6 @@ class Api::V1::ItemsController < ApplicationController
     @item.company_id = current_user.company_id
 
     fields = params[:item][:fields]
-
     if @item.save
       fields.each do |field|
         field = Field.create(
@@ -31,7 +30,6 @@ class Api::V1::ItemsController < ApplicationController
           :content => field
         )
       end
-
       render
     else
       render json: { errors: item.errors }, status: 422
@@ -42,9 +40,7 @@ class Api::V1::ItemsController < ApplicationController
     @item = current_user.company.items.find(params[:id])
 
     fields = params[:item][:fields]
-
     if @item.update(item_params)
-
       fields.each do |field|
         field = Field.create(
           :item_id => @item.id,
@@ -52,7 +48,6 @@ class Api::V1::ItemsController < ApplicationController
           :content => field
         )
       end
-
       render
     else
       render json: { errors: item.errors }, status: 422
