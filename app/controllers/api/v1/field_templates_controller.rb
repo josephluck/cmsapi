@@ -11,7 +11,8 @@ class Api::V1::FieldTemplatesController < ApplicationController
 
 	def show
 		# need to capture exceptions since this returns null if the :id doesn't belong to the page
-	  respond_with current_user.company.field_templates.find_by(id: params[:id])
+	  @field_template = current_user.company.field_templates.find_by(id: params[:id])
+	  render
 	end
 
 	def create
