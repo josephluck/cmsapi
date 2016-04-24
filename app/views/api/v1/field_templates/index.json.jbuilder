@@ -1,3 +1,3 @@
 json.array! @field_templates do |field_template|
-  json.merge! field_template.attributes
+  json.(field_template, :title, :id, :content)
 end

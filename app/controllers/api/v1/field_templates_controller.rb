@@ -17,8 +17,25 @@ class Api::V1::FieldTemplatesController < ApplicationController
 
 	def create
 	  @field_template = FieldTemplate.new(field_template_params)
-
 	  @field_template.company_id = current_user.company_id
+
+	  attributes = params[:field_template][:attributes]
+
+	  if @field_template.save
+	    attributes.each do |attribute|
+	      attribute = FieldTemplateAttribute.create(
+	        :field_template_id => @field_template.id,
+	        :company_id => current_user.company_id,
+	        :name => field[:name],
+	        :type => field[:type],
+	        :options => field[:options]
+	      )
+	    end
+
+	    render
+	  else
+	    render json: { errors: item.errors }, status: 422
+	  end
 
 	  if @field_template.save
 	    render
@@ -46,6 +63,6 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	private
 
 	  def field_template_params
-	    params.require(:field_template).permit(:title, :content => [])
+	    params.require(:field_template).permit(:title, :content)
 	  end
 end

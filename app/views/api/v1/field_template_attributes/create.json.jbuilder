@@ -1,0 +1,1 @@
+json.(@field_template_attribute, :name, :id, :kind, :options)

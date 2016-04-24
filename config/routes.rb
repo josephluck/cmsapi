@@ -39,6 +39,7 @@ CmsApi::Application.routes.draw do
 
       resources :fields, :only => [:index, :show, :create, :update, :destroy]
       resources :field_templates, :only => [:index, :show, :create, :update, :destroy]
+      resources :field_template_attributes, :only => [:index, :show, :create, :update, :destroy]
     end
   end
 end
