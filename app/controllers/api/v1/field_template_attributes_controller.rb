@@ -28,6 +28,8 @@ class Api::V1::FieldTemplateAttributesController < ApplicationController
   def update
     @field_template_attribute = current_user.company.field_template_attributes.find(params[:id])
 
+    byebug
+
     if @field_template_attribute.update(field_template_attribute_params)
       render
     else

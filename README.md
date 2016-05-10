@@ -49,4 +49,12 @@ If you need to re-start the server then run this from the api directory
 $ touch tmp/restart.txt
 ```
 
+## Debugging the app
+
+Run this in the command line
+
+```bash
+$ bundle exec byebug -R localhost:3001
+```
+
 Happy developing!
