@@ -2,8 +2,6 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	before_action :authenticate_with_token!, only: [:index, :show]
 	before_action :current_user_has_permission!, only: [:create, :update, :destroy]
 
-	before_action :remove_all_attributes, only: [:update]
-
 	respond_to :json
 
 	def index
@@ -21,17 +19,7 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	  @field_template = FieldTemplate.new(field_template_params)
 	  @field_template.company_id = current_user.company_id
 
-	  attributes = params[:field_template][:attributes]
 	  if @field_template.save
-	    attributes.each do |attribute|
-	      attribute = FieldTemplateAttribute.create(
-	        :field_template_id => @field_template.id,
-	        :company_id => current_user.company_id,
-	        :name => attribute[:name],
-	        :kind => attribute[:kind],
-	        :options => attribute[:options]
-	      )
-	    end
 	    render
 	  else
 	    render json: { errors: item.errors }, status: 422
@@ -41,18 +29,7 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	def update
 	  @field_template = current_user.company.field_templates.find(params[:id])
 
-	  attributes = params[:field_template][:attributes]
 	  if @field_template.update(field_template_params)
-	    attributes.each do |attribute|
-	      attribute = Field.create(
-	        :field_template_id => @field_template.id,
-	        :company_id => current_user.company_id,
-	        :name => attribute[:name],
-	        :kind => attribute[:kind],
-	        :options => attribute[:options]
-	      )
-	    end
-
 	    render
 	  else
 	    render json: { errors: item.errors }, status: 422
@@ -66,12 +43,6 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	end
 
 	private
-    def remove_all_attributes
-      @field_template = current_user.company.field_templates.find(params[:id])
-
-      @field_template.field_template_attributes.delete_all
-    end
-
 	  def field_template_params
 	    params.require(:field_template).permit(:title)
 	  end
