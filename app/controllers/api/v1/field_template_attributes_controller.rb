@@ -46,6 +46,6 @@ class Api::V1::FieldTemplateAttributesController < ApplicationController
   private
 
     def field_template_attribute_params
-      params.require(:field_template_attribute).permit(:name, :field_template_id, :kind, :options => [])
+      params.require(:field_template_attribute).permit(:name, :field_template_id, :kind, options: [:name, :value])
     end
 end
