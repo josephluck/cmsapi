@@ -14,6 +14,7 @@ class Company < ActiveRecord::Base
   has_many :sections, :dependent => :destroy
   has_many :items, :dependent => :destroy
   has_many :fields, :dependent => :destroy
+  has_many :field_attributes, :dependent => :destroy
   has_many :field_templates, :dependent => :destroy
   has_many :field_template_attributes, :dependent => :destroy
 

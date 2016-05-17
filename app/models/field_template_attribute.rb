@@ -11,4 +11,6 @@ class FieldTemplateAttribute < ActiveRecord::Base
 
 	belongs_to :company
 	belongs_to :field_template
+
+	has_many :field_attributes
 end

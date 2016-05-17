@@ -16,5 +16,5 @@ class Item < ActiveRecord::Base
   belongs_to :section
   belongs_to :company
   belongs_to :field_template
-  has_many :fields, autosave: true
+  has_many :fields, autosave: true, :dependent => :destroy
 end
