@@ -1,10 +1,10 @@
 class Item < ActiveRecord::Base
 	validates :title,
-		presence: true,
-		uniqueness: {
-			scope: :section,
-			message: "This item name already exists"
-		}
+		presence: true
+		# uniqueness: {
+		# 	scope: :section,
+		# 	message: "This item name already exists"
+		# }
 		# format: {
 		# 	with: /\A[a-zA-Z0-9_]*\Z/,
 		# 	message: "Please only alphanumeric with underscores"
@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
   belongs_to :company
   belongs_to :field_template
 
-  has_many :fields, autosave: true, :dependent => :destroy
+  has_many :fields, :dependent => :destroy
   accepts_nested_attributes_for :fields,
   	:allow_destroy => true,
   	:reject_if => :all_blank

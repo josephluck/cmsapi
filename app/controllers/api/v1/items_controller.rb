@@ -25,7 +25,7 @@ class Api::V1::ItemsController < ApplicationController
     if @item.save
       render
     else
-      render json: { errors: item.errors }, status: 422
+      render json: { errors: @item.errors }, status: 422
     end
   end
 
@@ -36,7 +36,7 @@ class Api::V1::ItemsController < ApplicationController
     if @item.update(item_params)
       render
     else
-      render json: { errors: item.errors }, status: 422
+      render json: { errors: @item.errors }, status: 422
     end
   end
 
@@ -54,6 +54,6 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:title, :section_id, fields: [:field_template_attribute_id, :value])
+      params.require(:item).permit(:title, :section_id, fields_attributes: [:field_template_attribute_id, :value])
     end
 end
