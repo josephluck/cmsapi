@@ -1,0 +1,2 @@
+class FieldAttributesController < ApplicationController
+end

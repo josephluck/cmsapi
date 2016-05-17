@@ -12,4 +12,5 @@ class FieldTemplate < ActiveRecord::Base
 	belongs_to :site
 	belongs_to :company
 	has_many :field_template_attributes, :dependent => :destroy
+	has_many :items
 end

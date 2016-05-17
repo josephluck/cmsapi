@@ -15,5 +15,6 @@ class Item < ActiveRecord::Base
 
   belongs_to :section
   belongs_to :company
-  has_many :fields
+  belongs_to :field_template
+  has_many :fields, autosave: true
 end

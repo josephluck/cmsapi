@@ -21,15 +21,15 @@ class Api::V1::ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.company_id = current_user.company_id
 
-    fields = params[:item][:fields]
+    # fields = params[:item][:fields]
     if @item.save
-      fields.each do |field|
-        field = Field.create(
-          :item_id => @item.id,
-          :company_id => current_user.company_id,
-          :content => field
-        )
-      end
+      # fields.each do |field|
+      #   field = Field.create(
+      #     :item_id => @item.id,
+      #     :company_id => current_user.company_id,
+      #     :content => field
+      #   )
+      # end
       render
     else
       render json: { errors: item.errors }, status: 422
@@ -68,6 +68,6 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:title, :section_id)
+      params.require(:item).permit(:title, :section_id, :fields)
     end
 end

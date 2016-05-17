@@ -1,0 +1,2 @@
+module FieldAttributesHelper
+end
