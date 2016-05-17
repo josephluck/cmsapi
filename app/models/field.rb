@@ -2,5 +2,5 @@ class Field < ActiveRecord::Base
 	belongs_to :company
 	belongs_to :item
 
-	has_many :field_attributes, :dependent => :destroy
+	has_many :field_attributes, autosave: true, :dependent => :destroy
 end

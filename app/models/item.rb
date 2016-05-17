@@ -16,5 +16,10 @@ class Item < ActiveRecord::Base
   belongs_to :section
   belongs_to :company
   belongs_to :field_template
+
   has_many :fields, autosave: true, :dependent => :destroy
+  accepts_nested_attributes_for :fields,
+  	:allow_destroy => true
+  	:reject_if => :all_blank
+
 end

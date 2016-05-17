@@ -20,16 +20,9 @@ class Api::V1::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.company_id = current_user.company_id
+    @item.fields.build
 
-    # fields = params[:item][:fields]
     if @item.save
-      # fields.each do |field|
-      #   field = Field.create(
-      #     :item_id => @item.id,
-      #     :company_id => current_user.company_id,
-      #     :content => field
-      #   )
-      # end
       render
     else
       render json: { errors: item.errors }, status: 422
@@ -38,16 +31,9 @@ class Api::V1::ItemsController < ApplicationController
 
   def update
     @item = current_user.company.items.find(params[:id])
+    @item.fields.build
 
-    fields = params[:item][:fields]
     if @item.update(item_params)
-      fields.each do |field|
-        field = Field.create(
-          :item_id => @item.id,
-          :company_id => current_user.company_id,
-          :content => field
-        )
-      end
       render
     else
       render json: { errors: item.errors }, status: 422
@@ -68,6 +54,6 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:title, :section_id, :fields)
+      params.require(:item).permit(:title, :section_id, fields_attributes: [:field_template_attribute_id, :value])
     end
 end

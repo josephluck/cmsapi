@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517065143) do
+ActiveRecord::Schema.define(version: 20160517072319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,13 +44,17 @@ ActiveRecord::Schema.define(version: 20160517065143) do
 
   add_index "domains", ["company_id"], name: "index_domains_on_company_id", using: :btree
 
-  create_table "field_atrributes", force: true do |t|
+  create_table "field_attributes", force: true do |t|
     t.integer  "field_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.integer  "field_template_attribute_id"
   end
 
-  add_index "field_atrributes", ["field_id"], name: "index_field_atrributes_on_field_id", using: :btree
+  add_index "field_attributes", ["company_id"], name: "index_field_attributes_on_company_id", using: :btree
+  add_index "field_attributes", ["field_id"], name: "index_field_attributes_on_field_id", using: :btree
+  add_index "field_attributes", ["field_template_attribute_id"], name: "index_field_attributes_on_field_template_attribute_id", using: :btree
 
   create_table "field_template_attributes", force: true do |t|
     t.integer  "company_id"

@@ -23,6 +23,9 @@ gem 'spring',        group: :development
 # Remote debugging
 gem "byebug", group: "development"
 
+# ERD diagrams -- bundle exec erd
+gem "rails-erd"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
