@@ -23,6 +23,21 @@ class Api::V1::ItemsController < ApplicationController
     @item.fields.build
 
     if @item.save
+      @item.fields.each_with_index do |field, index|
+        field.company_id = current_user.company_id
+
+        # Loop through the attributes in the hash
+        attributes = HashWithIndifferentAccess.new(params[:fields][index])
+        attributes.each do |key, value|
+          attribute = FieldAttribute.create(
+            :field_id => field.id,
+            :company_id => current_user.company_id,
+            :field_template_attribute_id => key,
+            :value => value
+          )
+        end
+      end
+
       render
     else
       render json: { errors: @item.errors }, status: 422
