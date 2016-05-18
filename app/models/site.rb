@@ -5,6 +5,6 @@ class Site < ActiveRecord::Base
   validates :company, :presence => true, :associated => true
 
   belongs_to :company
-  has_many :pages
-  has_many :field_templates
+  has_many :pages, :dependent => :destroy
+  has_many :field_templates, :dependent => :destroy
 end

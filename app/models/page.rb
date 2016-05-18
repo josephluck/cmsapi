@@ -15,5 +15,5 @@ class Page < ActiveRecord::Base
 
   belongs_to :site
   belongs_to :company
-  has_many :sections
+  has_many :sections, :dependent => :destroy
 end
