@@ -20,7 +20,11 @@ class Api::V1::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.company_id = current_user.company_id
-    @item.fields.build
+
+
+    params[:fields].length.times do
+      @item.fields.build
+    end
 
     if @item.save
       @item.fields.each_with_index do |field, index|
