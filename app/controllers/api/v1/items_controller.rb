@@ -30,13 +30,16 @@ class Api::V1::ItemsController < ApplicationController
       @item.fields.each_with_index do |field, index|
         field.company_id = current_user.company_id
 
+        template = FieldTemplate.find(params[:item][:field_template_id]) # Store the chosen template so we can access it later when creating the attributes
+
         # Loop through the attributes in the hash
         attributes = HashWithIndifferentAccess.new(params[:fields][index])
         attributes.each do |key, value|
+          template_attribute = template.field_template_attributes.find_by name: key
           attribute = FieldAttribute.create(
             :field_id => field.id,
             :company_id => current_user.company_id,
-            :field_template_attribute_id => key,
+            :field_template_attribute_id => template_attribute.id,
             :value => value
           )
         end

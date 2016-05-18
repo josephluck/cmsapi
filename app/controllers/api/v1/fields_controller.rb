@@ -17,8 +17,6 @@ class Api::V1::FieldsController < ApplicationController
     field = Field.new(field_params)
     field.company_id = current_user.company_id
 
-    field.created_at = Time.zone.parse('2000-00-00 21:00')
-
     if field.save
       render json: field, status: 201, location: [:api, field]
     else
