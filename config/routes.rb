@@ -25,6 +25,7 @@ CmsApi::Application.routes.draw do
 
       # CMS specific endpoints
       resources :sites, :only => [:index, :show, :create, :update, :destroy]
+      match '/sites/reorder', to: 'sites#reorder', via: "post"
 
       get '/companies/:id/pages', to: 'companies#pages'
 

@@ -5,7 +5,7 @@ class Api::V1::SitesController < ApplicationController
   respond_to :json
 
   def index
-    @sites = current_user.company.sites
+    @sites = current_user.company.sites.order(:order)
     render
   end
 
@@ -17,6 +17,7 @@ class Api::V1::SitesController < ApplicationController
   def create
     @site = Site.new(site_params)
     @site.company_id = current_user.company_id
+    @site.order = current_user.company.sites.length + 1
 
     if @site.save
       render
@@ -45,6 +46,14 @@ class Api::V1::SitesController < ApplicationController
   def pages
     @pages = Site.find(params[:site_id]).pages
     render
+  end
+
+  # Reorder the sites
+  def reorder
+    params[:order].each do |value|
+      Site.find(value[:id]).update_attribute(:order,value[:order])
+    end
+    render :nothing => true
   end
 
   private

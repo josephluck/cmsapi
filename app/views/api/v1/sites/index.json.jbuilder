@@ -1,3 +1,3 @@
 json.array! @sites do |site|
-  json.(site, :id, :title)
+  json.(site, :id, :order, :title)
 end
