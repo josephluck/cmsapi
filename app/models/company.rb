@@ -1,6 +1,5 @@
 class Company < ActiveRecord::Base
 	validates :name, uniqueness: true
-	after_create :create_site
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -17,11 +16,4 @@ class Company < ActiveRecord::Base
   has_many :field_attributes, :dependent => :destroy
   has_many :field_templates, :dependent => :destroy
   has_many :field_template_attributes, :dependent => :destroy
-
-  def create_site
-    Site.create(
-      title: 'First site',
-      company_id: self.id
-    )
-  end
 end
