@@ -6,5 +6,4 @@ class Site < ActiveRecord::Base
 
   belongs_to :company
   has_many :pages, :dependent => :destroy
-  has_many :field_templates, :dependent => :destroy
 end
