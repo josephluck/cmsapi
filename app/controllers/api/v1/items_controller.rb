@@ -20,7 +20,11 @@ class Api::V1::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.company_id = current_user.company_id
-    @item.order = current_user.company.items.length + 1
+    section = current_user.company.sections.find(params[:section_id])
+
+    if section
+      @item.order = section.items.length + 1
+    end
 
     params[:fields].length.times do
       @item.fields.build
