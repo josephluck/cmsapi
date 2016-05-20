@@ -10,15 +10,20 @@ class Api::V1::SectionsController < ApplicationController
   end
 
   def show
-  	# need to capture exceptions since this returns null if the :id doesn't belong to the page
     @section = current_user.company.sections.find_by(id: params[:id])
+    @items = @section.items.order(:order)
+
     render
   end
 
   def create
     @section = Section.new(section_params)
     @section.company_id = current_user.company_id
-    @section.order = current_user.company.sections.length + 1
+    page = current_user.company.pages.find(params[:page_id])
+
+    if page
+      @section.order = page.sections.length + 1
+    end
 
     if @section.save
       render

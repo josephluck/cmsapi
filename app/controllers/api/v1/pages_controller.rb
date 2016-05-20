@@ -5,12 +5,14 @@ class Api::V1::PagesController < ApplicationController
   respond_to :json
 
   def index
-    @pages = current_user.company.pages
+    @pages = current_user.company.pages.order(:order)
     render
   end
 
   def show
     @page = current_user.company.pages.find_by(id: params[:id])
+    @sections = @page.sections.order(:order)
+
     render
   end
 
