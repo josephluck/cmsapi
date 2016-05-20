@@ -17,6 +17,11 @@ class Api::V1::PagesController < ApplicationController
   def create
     @page = Page.new(page_params)
     @page.company_id = current_user.company_id
+    site = current_user.company.sites.find(params[:site_id])
+
+    if site
+      @page.order = site.pages.length + 1
+    end
 
     if @page.save
       render
@@ -39,6 +44,14 @@ class Api::V1::PagesController < ApplicationController
     page = current_user.company.pages.find(params[:id])
     page.destroy
     head 204
+  end
+
+  # Reorder the sites
+  def reorder
+    params[:order].each do |value|
+      Page.find(value[:id]).update_attribute(:order,value[:order])
+    end
+    render :nothing => true
   end
 
   # Return an array of sections for this page

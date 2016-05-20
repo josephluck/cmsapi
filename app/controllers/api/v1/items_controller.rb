@@ -20,6 +20,7 @@ class Api::V1::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.company_id = current_user.company_id
+    @item.order = current_user.company.items.length + 1
 
     params[:fields].length.times do
       @item.fields.build
@@ -85,6 +86,14 @@ class Api::V1::ItemsController < ApplicationController
     item = current_user.company.items.find(params[:id])
     item.destroy
     head 204
+  end
+
+  # Reorder the sites
+  def reorder
+    params[:order].each do |value|
+      Item.find(value[:id]).update_attribute(:order,value[:order])
+    end
+    render :nothing => true
   end
 
   private

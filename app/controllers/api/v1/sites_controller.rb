@@ -11,6 +11,8 @@ class Api::V1::SitesController < ApplicationController
 
   def show
     @site = current_user.company.sites.find_by(id: params[:id])
+    @pages = @site.pages.order(:order)
+
     render
   end
 

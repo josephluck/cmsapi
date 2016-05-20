@@ -1,5 +1,5 @@
 json.(@site, :title, :id, :order)
 
-json.pages @site.pages do |page|
-	json.(page, :id, :title)
+json.pages @pages do |page|
+	json.(page, :id, :title, :order)
 end

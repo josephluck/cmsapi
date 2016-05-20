@@ -18,6 +18,7 @@ class Api::V1::SectionsController < ApplicationController
   def create
     @section = Section.new(section_params)
     @section.company_id = current_user.company_id
+    @section.order = current_user.company.sections.length + 1
 
     if @section.save
       render
@@ -40,6 +41,14 @@ class Api::V1::SectionsController < ApplicationController
     section = current_user.company.sections.find(params[:id])
     section.destroy
     head 204
+  end
+
+  # Reorder the sites
+  def reorder
+    params[:order].each do |value|
+      Section.find(value[:id]).update_attribute(:order,value[:order])
+    end
+    render :nothing => true
   end
 
   # Return an array of sections for this page

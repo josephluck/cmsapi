@@ -19,8 +19,6 @@ CmsApi::Application.routes.draw do
       resources :team_members, :only => [:index, :create, :update, :destroy]
       resources :projects, :only => [:index, :show, :create, :update, :destroy]
       resources :user_projects, :only => [:index, :show, :create, :update]
-      # When users are removed from projects the params contain the user id and project id
-      # Not the associated id, hence why match is needed.
       match "/user_projects", to: "user_projects#destroy", via: "delete"
 
       # CMS specific endpoints
@@ -30,16 +28,22 @@ CmsApi::Application.routes.draw do
       get '/companies/:id/pages', to: 'companies#pages'
 
       resources :pages, :only => [:index, :show, :create, :update, :destroy]
+      match '/pages/reorder', to: 'pages#reorder', via: "post"
       get '/sites/:site_id/pages', to: 'sites#pages'
 
       resources :sections, :only => [:index, :show, :create, :update, :destroy]
+      match '/sections/reorder', to: 'sections#reorder', via: "post"
       get '/pages/:page_id/sections', to: 'pages#sections'
 
       resources :items, :only => [:index, :show, :create, :update, :destroy]
+      match '/items/reorder', to: 'items#reorder', via: "post"
       get '/sections/:section_id/items', to: 'sections#items'
 
       resources :fields, :only => [:index, :show, :create, :update, :destroy]
+
       resources :field_templates, :only => [:index, :show, :create, :update, :destroy]
+      match '/field_templates/reorder', to: 'field_templates#reorder', via: "post"
+
       resources :field_template_attributes, :only => [:index, :show, :create, :update, :destroy]
     end
   end

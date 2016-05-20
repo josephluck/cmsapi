@@ -18,6 +18,7 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	def create
 	  @field_template = FieldTemplate.new(field_template_params)
 	  @field_template.company_id = current_user.company_id
+	  @field_template.order = current_user.company.field_templates.length + 1
 
 	  if @field_template.save
 	    render
@@ -41,6 +42,14 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	  field_template.destroy
 	  head 204
 	end
+
+  # Reorder the sites
+  def reorder
+    params[:order].each do |value|
+      FieldTemplate.find(value[:id]).update_attribute(:order,value[:order])
+    end
+    render :nothing => true
+  end
 
 	private
 	  def field_template_params
