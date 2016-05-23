@@ -51,4 +51,8 @@ gem 'pg'
 
 gem "devise"
 
+group :development, :test do
+	gem 'foreman'
+end
+
 ruby "2.2.3"
