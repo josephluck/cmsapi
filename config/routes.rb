@@ -2,7 +2,7 @@ require "api_constraints"
 
 CmsApi::Application.routes.draw do
   devise_for :companies
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations' }
   # Api definition
   namespace :api, defaults: { format: :json },
                               path: '/'  do
@@ -10,6 +10,8 @@ CmsApi::Application.routes.draw do
               constraints: ApiConstraints.new(version: 1, default: true) do
       # We are going to list our resources here
       resources :users, :only => [:index, :show, :create, :update, :destroy]
+      match '/users/reset_password_email', to:'users#reset_password_email', via: 'post'
+
       resources :sessions, :only => [:create, :destroy]
       get '/sessions/:auth_token', to: 'sessions#show'
       match '/sessions', to:'sessions#destroy', via: 'delete'

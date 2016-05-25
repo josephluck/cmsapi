@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user.company.users.find(params[:id])
     render
   end
 
@@ -42,7 +42,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
-    @user = current_user
+    @user = current_user.company.users.find(params[:id])
 
     if @user.update(user_params)
       render
@@ -53,8 +53,17 @@ class Api::V1::UsersController < ApplicationController
 
   def destroy
     # Rework this such that the user can't delete the last admin user
-    current_user.destroy
+    @user = current_user.company.users.find(params[:id])
+    @user.destroy
+
     head 204
+  end
+
+  def reset_password_email
+    user = User.find_by email: params[:email]
+    user.send_reset_password_instructions
+    # flash[:notice] = "Reset password instructions have been sent to #{user.email}."
+    # redirect_to admin_user_path(user)
   end
 
   private

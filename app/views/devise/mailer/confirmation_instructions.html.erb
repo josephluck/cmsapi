@@ -1,5 +1,8 @@
-<p>Welcome <%= @email %>!</p>
+<p>Almost done!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>Welcome <%= @email %>. Click the confirm button below to confirm your Air Content account.</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+Cheers,
+The Air Content team.
