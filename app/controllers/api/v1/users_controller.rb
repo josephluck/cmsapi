@@ -67,10 +67,10 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def reset_password
-    user = User.find_by reset_password_token: params[:reset_password_token]
+    @user = User.find_by reset_password_token: params[:reset_password_token]
 
-    if user.update(user_params)
-      head 204
+    if @user.update(user_params)
+      render
     else
       render json: { errors: user.errors }, status: 422
     end
