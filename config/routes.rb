@@ -11,6 +11,7 @@ CmsApi::Application.routes.draw do
       # We are going to list our resources here
       resources :users, :only => [:index, :show, :create, :update, :destroy]
       match '/users/reset_password_email', to:'users#reset_password_email', via: 'post'
+      match '/users/reset_password', to:'users#reset_password', via: 'post'
 
       resources :sessions, :only => [:create, :destroy]
       get '/sessions/:auth_token', to: 'sessions#show'

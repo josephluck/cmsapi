@@ -62,8 +62,18 @@ class Api::V1::UsersController < ApplicationController
   def reset_password_email
     user = User.find_by email: params[:email]
     user.send_reset_password_instructions
-    # flash[:notice] = "Reset password instructions have been sent to #{user.email}."
-    # redirect_to admin_user_path(user)
+
+    head 204
+  end
+
+  def reset_password
+    user = User.find_by reset_password_token: params[:reset_password_token]
+
+    if user.update(user_params)
+      head 204
+    else
+      render json: { errors: user.errors }, status: 422
+    end
   end
 
   private
