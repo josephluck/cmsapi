@@ -5,7 +5,7 @@ class Api::V1::FieldTemplatesController < ApplicationController
 	respond_to :json
 
 	def index
-	  @field_templates = current_user.company.field_templates
+	  @field_templates = current_user.company.field_templates.order(:order)
 	  render
 	end
 
