@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523132123) do
+ActiveRecord::Schema.define(version: 20160530112952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,9 +85,11 @@ ActiveRecord::Schema.define(version: 20160523132123) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.integer  "item_id"
+    t.integer  "field_template_id"
   end
 
   add_index "fields", ["company_id"], name: "index_fields_on_company_id", using: :btree
+  add_index "fields", ["field_template_id"], name: "index_fields_on_field_template_id", using: :btree
   add_index "fields", ["item_id"], name: "index_fields_on_item_id", using: :btree
 
   create_table "items", force: true do |t|
@@ -96,12 +98,10 @@ ActiveRecord::Schema.define(version: 20160523132123) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.string   "title"
-    t.integer  "field_template_id"
     t.integer  "order"
   end
 
   add_index "items", ["company_id"], name: "index_items_on_company_id", using: :btree
-  add_index "items", ["field_template_id"], name: "index_items_on_field_template_id", using: :btree
   add_index "items", ["section_id"], name: "index_items_on_section_id", using: :btree
 
   create_table "pages", force: true do |t|

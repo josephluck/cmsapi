@@ -1,4 +1,4 @@
-json.(@item, :title, :id, :field_template_id)
+json.(@item, :title, :id)
 
 json.fields @item.fields do |field|
 	json.id field.id

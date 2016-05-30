@@ -13,5 +13,5 @@ class FieldTemplate < ActiveRecord::Base
 	belongs_to :company
 
 	has_many :field_template_attributes, autosave: true, :dependent => :destroy
-	has_many :items
+	has_many :fields
 end
