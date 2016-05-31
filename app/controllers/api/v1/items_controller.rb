@@ -57,6 +57,7 @@ class Api::V1::ItemsController < ApplicationController
 
   def update
     @item = current_user.company.items.find(params[:id])
+
     params[:fields].length.times do
       @item.fields.build
     end
@@ -68,12 +69,13 @@ class Api::V1::ItemsController < ApplicationController
 
         field.company_id = current_user.company_id
         field.field_template_id = template[:id]
+        field.save
 
         attributes.each do |attribute| # Each attribute inside the field
           attribute = FieldAttribute.create( # Create the field attribute in the DB
             :field_id => field.id,
             :company_id => current_user.company_id,
-            :field_template_attribute_id => attribute[:id], # Store the reference to the field template attribute
+            :field_template_attribute_id => attribute[:field_template_attribute_id], # Store the reference to the field template attribute
             :value => attribute[:value]
           )
         end
