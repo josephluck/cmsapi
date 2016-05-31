@@ -1,9 +1,11 @@
 json.(@item, :title, :id)
 
 json.fields @item.fields do |field|
-	json.id field.id
+	json.(field, :id)
+	json.title field.field_template.title
 
-	json.array! Hash[field.field_attributes.map{ |attribute|
-		[ attribute.field_template_attribute.name, attribute.value ]
-	}]
+	json.attributes field.field_attributes do |attribute|
+		json.(attribute, :field_id, :value, :id, :field_template_attribute_id)
+		json.kind attribute.field_template_attribute.kind
+	end
 end

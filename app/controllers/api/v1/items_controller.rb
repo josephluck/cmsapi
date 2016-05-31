@@ -32,10 +32,12 @@ class Api::V1::ItemsController < ApplicationController
 
     if @item.save
       @item.fields.each_with_index do |field, index| # Fields automatically saved
-        field.company_id = current_user.company_id
-
         template = FieldTemplate.find(params[:fields][index][:field_template_id]) # Store the chosen template so we can access it later when creating the attributes
         attributes = HashWithIndifferentAccess.new(params[:fields][index])[:attributes] # Get the attributes from the field in question
+
+        field.company_id = current_user.company_id
+        field.field_template_id = template[:id]
+        field.save
 
         attributes.each do |attribute| # Each attribute inside the field
           attribute = FieldAttribute.create( # Create the field attribute in the DB
@@ -60,20 +62,19 @@ class Api::V1::ItemsController < ApplicationController
     end
 
     if @item.update(item_params)
-      @item.fields.each_with_index do |field, index|
+      @item.fields.each_with_index do |field, index| # Fields automatically saved
+        template = FieldTemplate.find(params[:fields][index][:field_template_id]) # Store the chosen template so we can access it later when creating the attributes
+        attributes = HashWithIndifferentAccess.new(params[:fields][index])[:attributes] # Get the attributes from the field in question
+
         field.company_id = current_user.company_id
+        field.field_template_id = template[:id]
 
-        template = FieldTemplate.find(params[:item][:field_template_id]) # Store the chosen template so we can access it later when creating the attributes
-
-        # Loop through the attributes in the hash
-        attributes = HashWithIndifferentAccess.new(params[:fields][index])
-        attributes.each do |key, value|
-          template_attribute = template.field_template_attributes.find_by name: key
-          attribute = FieldAttribute.create(
+        attributes.each do |attribute| # Each attribute inside the field
+          attribute = FieldAttribute.create( # Create the field attribute in the DB
             :field_id => field.id,
             :company_id => current_user.company_id,
-            :field_template_attribute_id => template_attribute.id,
-            :value => value
+            :field_template_attribute_id => attribute[:id], # Store the reference to the field template attribute
+            :value => attribute[:value]
           )
         end
       end
