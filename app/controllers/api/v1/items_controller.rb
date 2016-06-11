@@ -43,7 +43,7 @@ class Api::V1::ItemsController < ApplicationController
           attribute = FieldAttribute.create( # Create the field attribute in the DB
             :field_id => field.id,
             :company_id => current_user.company_id,
-            :field_template_attribute_id => attribute[:id], # Store the reference to the field template attribute
+            :field_template_attribute_id => attribute[:field_template_attribute_id], # Store the reference to the field template attribute
             :value => attribute[:value]
           )
         end
